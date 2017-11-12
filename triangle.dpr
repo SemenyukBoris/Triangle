@@ -8,22 +8,41 @@ uses
   System.SysUtils,
   Math;
 
+const ACCURACY = 0.1;
+
 type data = record
-  A : real;
-  B : real;
-  C : real;
-  square : real;
+  A : double;
+  B : double;
+  C : double;
+  square : double;
 end;
 
-function check(a,b,c,half,P:real):boolean;
+type TArr = array of data;
+
+function check(a,b,c,half,P:double):boolean;
 begin
+  if (SameValue(a, half, 1E-15 * 1000)) then
+    begin
+      result := false;
+      exit;
+    end;
   if (a < half) then
     begin
+      if (SameValue(b, half, 1E-15 * 1000)) then
+        begin
+          result := false;
+          exit;
+        end;
       if (b < half) then
         begin
+          if (SameValue(c, half, 1E-15 * 1000)) then
+            begin
+              result := false;
+              exit;
+            end;
           if (c < half) then
             begin
-              if ((a+b+c) = P) then
+              if (SameValue((a+b+c), P, 1E-15 * 1000)) then
                 begin
                   //writeln('Check - OK');
                   result := true;
@@ -41,9 +60,50 @@ begin
     result := false;
 end;
 
-var i,j,curr,a,b,c,perim:integer;
-    sq,half,tmp1,tmp2:real;
-    arr:array of data;
+procedure sort(var arr:TArr; min,max:integer);
+var i,j:integer;
+    op:real;
+    tmp:data;
+begin
+  op := arr[max-((max-min) div 2)].square;
+  i := min;
+  j := max;
+  while i<j do
+    begin
+      while arr[i].square > op do i:=i+1;
+      while arr[j].square < op do j:=j-1;
+      if i<=j then
+        begin
+          tmp:=arr[i];
+          arr[i]:=arr[j];
+          arr[j]:=tmp;
+          i:=i+1;
+          j:=j-1;
+        end;
+    end;
+  if min < j then sort(arr, min, j);
+  if i < max then sort(arr, i, max);
+end;
+
+procedure remove_equal(var arr:TArr; var counter:integer);
+var i:integer;
+begin
+  for I := 0 to High(arr)-1 do
+    begin
+      if (SameValue(arr[i].square, arr[i+1].square, 1E-15 * 1000)) then
+        begin
+          inc(counter);
+          arr[i+1].A := 0.0;
+          arr[i+1].B := 0.0;
+          arr[i+1].C := 0.0;
+          arr[i+1].square := 0.0;
+        end;
+    end;
+end;
+
+var i,j,k,curr,perim,counter:integer;
+    sq,half,tmp1,a,b,c,tmp2:double;
+    arr:TArr;
     flag:boolean;
 
 begin
@@ -54,23 +114,23 @@ begin
   writeln('Perimetr = ', perim);
   writeln('HalfPeri = ', half:0:2);
 
-  a := 1;
+  a := ACCURACY;
   b := 0;
   c := perim - b - a;
   curr := 0;
   flag := false;
+  counter := 0;
   while (true) do
     begin
       if (a > half) then break;
       while(true) do
         begin
-          b := b + 1;
-          c := c - 1;
+          b := b + ACCURACY;
+          c := c - ACCURACY;
           flag := check(a,b,c,half,perim);
           if flag = true then
             begin
              sq := sqrt(half*(half - a)*(half - b)*(half - c));
-             //writeln('A = ',a,' | B = ',b,' | C = ',c, '| S = ',sq:0:5);
              Setlength(arr, curr+1);
              arr[curr].A := a;
              arr[curr].B := b;
@@ -80,7 +140,7 @@ begin
             end;
           if c <= b then
             begin
-              a := a + 1;
+              a := a + ACCURACY;
               b := 0;
               c := perim - b - a;
             end;
@@ -89,12 +149,22 @@ begin
       if (a > half) then break;
     end;
 
+    sort(arr, low(arr), high(arr));
+
+    for K := 1 to 3 do
+      begin
+        counter := 0;
+        remove_equal(arr,counter);
+        sort(arr, low(arr), high(arr));
+        Setlength(arr, length(arr)-counter);
+      end;
+
     writeln('Count of variants = ', length(arr));
     writeln;
 
-    for I := 0 to High(arr) do
+    for J := Low(arr) to High(arr) do
       begin
-        writeln('A = ',arr[i].A:0:2,' | B = ',arr[i].B:0:2,' | C = ',arr[i].C:0:2, '| S = ',arr[i].square:0:5);
+        writeln('A = ',arr[j].A:0:2,' | B = ',arr[j].B:0:2,' | C = ',arr[j].C:0:2, '| S = ',arr[j].square:0:5);
       end;
 
   readln;
