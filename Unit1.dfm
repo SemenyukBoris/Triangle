@@ -23,42 +23,42 @@ object Form1: TForm1
   TextHeight = 13
   object Perimetr_Label: TLabel
     Left = 613
-    Top = 64
+    Top = 56
     Width = 50
     Height = 13
     Caption = 'Perimetr : '
   end
   object A_Label: TLabel
     Left = 623
-    Top = 83
+    Top = 75
     Width = 40
     Height = 13
     Caption = 'Side A : '
   end
   object B_Label: TLabel
     Left = 624
-    Top = 102
+    Top = 94
     Width = 39
     Height = 13
     Caption = 'Side B : '
   end
   object C_Label: TLabel
     Left = 623
-    Top = 121
+    Top = 113
     Width = 40
     Height = 13
     Caption = 'Side C : '
   end
   object Square_Label: TLabel
     Left = 619
-    Top = 140
+    Top = 132
     Width = 44
     Height = 13
     Caption = 'Square : '
   end
   object Perimetr_Data_Label: TLabel
     Left = 669
-    Top = 64
+    Top = 56
     Width = 6
     Height = 13
     Anchors = [akTop, akRight]
@@ -66,7 +66,7 @@ object Form1: TForm1
   end
   object A_Data_Label: TLabel
     Left = 669
-    Top = 83
+    Top = 75
     Width = 6
     Height = 13
     Anchors = [akTop, akRight]
@@ -74,7 +74,7 @@ object Form1: TForm1
   end
   object B_Data_Label: TLabel
     Left = 669
-    Top = 102
+    Top = 94
     Width = 6
     Height = 13
     Anchors = [akTop, akRight]
@@ -82,7 +82,7 @@ object Form1: TForm1
   end
   object C_Data_Label: TLabel
     Left = 669
-    Top = 121
+    Top = 113
     Width = 6
     Height = 13
     Anchors = [akTop, akRight]
@@ -90,7 +90,7 @@ object Form1: TForm1
   end
   object S_Data_Label: TLabel
     Left = 669
-    Top = 140
+    Top = 132
     Width = 6
     Height = 13
     Anchors = [akTop, akRight]
@@ -98,38 +98,38 @@ object Form1: TForm1
   end
   object im: TImage
     Left = 16
-    Top = 24
-    Width = 522
-    Height = 409
+    Top = 16
+    Width = 481
+    Height = 420
   end
   object Label1: TLabel
-    Left = 557
-    Top = 64
+    Left = 544
+    Top = 56
     Width = 44
     Height = 13
     Caption = 'Accuracy'
   end
   object Button_Create: TButton
     Left = 544
-    Top = 24
+    Top = 16
     Width = 177
-    Height = 25
+    Height = 34
     Caption = 'CREATE'
     TabOrder = 0
     OnClick = Button_CreateClick
   end
   object ListBox1: TListBox
-    Left = 544
-    Top = 162
-    Width = 177
-    Height = 271
+    Left = 503
+    Top = 160
+    Width = 218
+    Height = 273
     ItemHeight = 13
     TabOrder = 1
     OnDblClick = ListBox1DblClick
   end
   object RB_1: TRadioButton
-    Left = 558
-    Top = 83
+    Left = 545
+    Top = 75
     Width = 27
     Height = 17
     Caption = '1'
@@ -138,19 +138,11 @@ object Form1: TForm1
     TabStop = True
   end
   object RB_01: TRadioButton
-    Left = 558
-    Top = 106
+    Left = 545
+    Top = 98
     Width = 43
     Height = 17
     Caption = '0.1'
     TabOrder = 3
-  end
-  object RB_001: TRadioButton
-    Left = 558
-    Top = 129
-    Width = 43
-    Height = 17
-    Caption = '0.01'
-    TabOrder = 4
   end
 end
